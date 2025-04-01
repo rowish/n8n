@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  n8n:
+    image: n8nio/n8n
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "443:443"
+        #- "5678:5678"
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+      - ./tls:/etc/ssl
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=${N8N_BASIC_AUTH_ACTIVE}
+      - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
+      - N8N_RUNNERS_ENABLED=true
+      - N8N_RELEASE_DATE=${N8N_RELEASE_DATE}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_PROTOCOL=https
+      - N8N_HOST=${N8N_HOST}
+      - N8N_PORT=443
+      - N8N_SSL_CERT=/etc/ssl/certs/n8n-ip.crt
+      - N8N_SSL_KEY=/etc/ssl/private/n8n-ip.key
